@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          QUESOOOOO <code>src/App.js </code> 
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './components/AuthContext';
+import Layout from './components/Layout';
+import Inicio from './components/Inicio';
+import Login from './components/Login';
+import React from 'react';
+
+
+
+
+const App = () => {
+    return (
+        <AuthProvider>
+                <Router>
+                    <Layout>
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/login" replace />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/inicio" element={<ProtectedRoute component={Inicio} />} />
+
+                        </Routes>
+                    </Layout>
+                </Router>
+        </AuthProvider>
+    );
+};
 
 export default App;
